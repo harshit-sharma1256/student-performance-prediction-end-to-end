@@ -11,6 +11,9 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig
+
 @dataclass     # THIS IS A DECORATOR.YOU CAN DIRECTLY DEFINE YOUR VARIABLES OF CLASS WITHOUT WRITING THE __init__ METHOD.
 class DataIngestionConfig:
     """
@@ -38,7 +41,7 @@ class DataIngestion:
         # WHEN I CALL THIS 'DataIngestion' CLASS THE ABOVE ALL 3 PATHS WILL  SAVED INSIDE THIS CLASS VARIABLE.
         self.ingestion_config = DataIngestionConfig()
 
-    def intiate_data_ingestion(self):
+    def initiate_data_ingestion(self):
         """
         WHAT THIS FUNCTION(METHOD) WILL DO:-
         IF YOUR DATA STORED IN SOME DATABASES LIKE- MONGODB OR MYSQL, THEN I WILL CREATE A MONGODB CLIENT OR MYSQL
@@ -75,9 +78,12 @@ class DataIngestion:
         except Exception as e:
             raise CustomException(e,sys)
         
-# if __name__ == "__main__":
-#     obj = DataIngestion()
-#     obj.intiate_data_ingestion()
+if __name__=="__main__":
+    obj=DataIngestion()
+    train_data,test_data=obj.initiate_data_ingestion()
+
+    data_transformation=DataTransformation()
+    train_arr,test_arr,_=data_transformation.initiate_data_transformation(train_data,test_data)
     
 
 
